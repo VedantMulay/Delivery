@@ -1,4 +1,4 @@
-package lol.vedant.delivery.menu;
+package lol.vedant.delivery.api.menu;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -1,0 +1,9 @@
+GENERAL:
+  PREFIX: "&7[&#00FF97Delivery&7]"
+  NO_PERMISSION: "{prefix} &#FF0042You do not have permission to do this."
+  PLAYER_ONLY: "{prefix} &#FF0042This action can only be done by a player."
+
+DELIVERY:
+  CLAIM: "{prefix} &fYou claimed the &#00FF97{delivery} &fsuccessfully."
+  NO_PERMISSION: "{prefix} &#FF0042You do not have permission to claim this delivery."
+  WAIT: "{prefix} &#FF0042Please wait {time} to claim this delivery."

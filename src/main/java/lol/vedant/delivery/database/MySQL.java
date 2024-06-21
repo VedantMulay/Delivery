@@ -1,2 +1,4 @@
-package lol.vedant.delivery.database;public class MySQL {
+package lol.vedant.delivery.database;
+
+public class MySQL {
 }
