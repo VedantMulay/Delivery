@@ -1,0 +1,5 @@
+name: Delivery
+version: '${project.version}'
+main: lol.vedant.delivery.Delivery
+api-version: '1.16'
+load: STARTUP
