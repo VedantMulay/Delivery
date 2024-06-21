@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024 Vedant Mulay. All rights reserved.
+ */
+
 package lol.vedant.delivery;
 
 import io.th0rgal.oraxen.compatibilities.CompatibilitiesManager;
@@ -5,6 +9,9 @@ import lol.vedant.delivery.api.menu.MenuListener;
 import lol.vedant.delivery.commands.DeliveryCommand;
 import lol.vedant.delivery.api.menu.MenuManager;
 import lol.vedant.delivery.config.ConfigManager;
+import lol.vedant.delivery.database.Database;
+import lol.vedant.delivery.database.MySQL;
+import lol.vedant.delivery.database.SQLite;
 import lol.vedant.delivery.utils.OraxenSupport;
 import me.despical.commandframework.CommandFramework;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,6 +22,7 @@ public final class Delivery extends JavaPlugin  {
     private CommandFramework commandFramework;
     private MenuManager menuManager;
     private ConfigManager configManager;
+    private Database database;
 
     private static Delivery instance;
 
@@ -32,6 +40,13 @@ public final class Delivery extends JavaPlugin  {
         this.configManager = new ConfigManager(this);
 
         getServer().getPluginManager().registerEvents(new MenuListener(this.menuManager), this);
+
+
+        if(getConfiguration().getBoolean("database.enabled")) {
+            database = new MySQL(this);
+        } else {
+            database = new SQLite(this);
+        }
     }
 
     @Override

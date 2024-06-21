@@ -9,7 +9,7 @@ import lol.vedant.delivery.action.Action;
 import lol.vedant.delivery.utils.Utils;
 import org.bukkit.entity.Player;
 
-public class Title implements Action {
+public class TitleAction implements Action {
 
     @Override
     public String getId() {

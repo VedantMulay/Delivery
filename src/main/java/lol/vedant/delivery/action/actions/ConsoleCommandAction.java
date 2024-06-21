@@ -9,8 +9,7 @@ import lol.vedant.delivery.action.Action;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class ConsoleCommand implements Action {
-
+public class ConsoleCommandAction implements Action {
 
     @Override
     public String getId() {
