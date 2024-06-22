@@ -7,6 +7,8 @@ package lol.vedant.delivery.utils;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TimeUtils {
 
@@ -47,22 +49,30 @@ public class TimeUtils {
         return String.format("%d days, %d hours, %d minutes, %d seconds", days, hours, minutes, seconds);
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime futureDate = addTime(now, 10, ChronoUnit.MINUTES);
+    public static Duration parseDuration(String input) {
+        // Define regex pattern to extract days, hours, minutes, and seconds
+        Pattern pattern = Pattern.compile("(?:(\\d+)d)?\\s*(?:(\\d+)h)?\\s*(?:(\\d+)m)?\\s*(?:(\\d+)s)?");
+        Matcher matcher = pattern.matcher(input);
 
-        System.out.println("Current time: " + now);
-        System.out.println("Future time after adding 10 minutes: " + futureDate);
+        int days = 0;
+        int hours = 0;
+        int minutes = 0;
+        int seconds = 0;
 
-        LocalDateTime pastDate = subtractTime(now, 5, ChronoUnit.HOURS);
-        System.out.println("Past time after subtracting 5 hours: " + pastDate);
+        if (matcher.matches()) {
+            if (matcher.group(1) != null) days = Integer.parseInt(matcher.group(1));
+            if (matcher.group(2) != null) hours = Integer.parseInt(matcher.group(2));
+            if (matcher.group(3) != null) minutes = Integer.parseInt(matcher.group(3));
+            if (matcher.group(4) != null) seconds = Integer.parseInt(matcher.group(4));
+        } else {
+            throw new IllegalArgumentException("Invalid duration format");
+        }
 
-        Duration cooldown = Duration.ofMinutes(15);
-        boolean isCooldownOver = isCooldownOver(now, cooldown);
-        System.out.println("Is cooldown over: " + isCooldownOver);
+        long totalSeconds = seconds
+                + minutes * 60
+                + hours * 3600
+                + days * 86400;
 
-        Duration remainingCooldown = getRemainingCooldown(now, cooldown);
-        System.out.println("Remaining cooldown: " + formatDuration(remainingCooldown));
+        return Duration.ofSeconds(totalSeconds);
     }
 }

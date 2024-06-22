@@ -6,3 +6,4 @@ load: STARTUP
 softdepend:
   - "Oraxen"
   - "ProtocolLib"
+  - "PlaceholderAPI"

@@ -5,14 +5,16 @@
 package lol.vedant.delivery;
 
 import io.th0rgal.oraxen.compatibilities.CompatibilitiesManager;
+import lol.vedant.delivery.action.ActionManager;
 import lol.vedant.delivery.api.menu.MenuListener;
 import lol.vedant.delivery.commands.DeliveryCommand;
 import lol.vedant.delivery.api.menu.MenuManager;
 import lol.vedant.delivery.config.ConfigManager;
+import lol.vedant.delivery.core.DeliveryManager;
 import lol.vedant.delivery.database.Database;
 import lol.vedant.delivery.database.MySQL;
 import lol.vedant.delivery.database.SQLite;
-import lol.vedant.delivery.utils.OraxenSupport;
+import lol.vedant.delivery.hooks.OraxenHook;
 import me.despical.commandframework.CommandFramework;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,6 +24,8 @@ public final class Delivery extends JavaPlugin  {
     private CommandFramework commandFramework;
     private MenuManager menuManager;
     private ConfigManager configManager;
+    private ActionManager actionManager;
+    private DeliveryManager deliveryManager;
     private Database database;
 
     private static Delivery instance;
@@ -30,14 +34,16 @@ public final class Delivery extends JavaPlugin  {
     @Override
     public void onEnable() {
 
-        CompatibilitiesManager.addCompatibility("Delivery", OraxenSupport.class);
+        CompatibilitiesManager.addCompatibility("Delivery", OraxenHook.class);
 
         instance = this;
         commandFramework = new CommandFramework(this);
         commandFramework.registerCommands(new DeliveryCommand());
 
-        this.menuManager = new MenuManager(this);
-        this.configManager = new ConfigManager(this);
+        menuManager = new MenuManager(this);
+        configManager = new ConfigManager(this);
+        actionManager = new ActionManager(this);
+        deliveryManager = new DeliveryManager(this);
 
         getServer().getPluginManager().registerEvents(new MenuListener(this.menuManager), this);
 
@@ -47,6 +53,8 @@ public final class Delivery extends JavaPlugin  {
         } else {
             database = new SQLite(this);
         }
+
+
     }
 
     @Override
@@ -58,6 +66,10 @@ public final class Delivery extends JavaPlugin  {
         return menuManager;
     }
 
+    public DeliveryManager getDeliveryManager() {
+        return deliveryManager;
+    }
+
     public YamlConfiguration getConfiguration() {
         return configManager.getConfig();
     }
@@ -67,7 +79,7 @@ public final class Delivery extends JavaPlugin  {
     }
 
     public YamlConfiguration getDeliveries() {
-        return configManager.getLang();
+        return configManager.getGUI();
     }
 
     public static Delivery getInstance() {

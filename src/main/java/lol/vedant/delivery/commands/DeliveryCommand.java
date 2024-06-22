@@ -32,7 +32,7 @@ public class DeliveryCommand {
             return;
         }
 
-        Delivery.getInstance().getMenuManager().openMenu((Player) sender, new DeliveryMenu("default"));
+        Delivery.getInstance().getMenuManager().openMenu((Player) sender, new DeliveryMenu((Player) sender, "default"));
 
 
     }

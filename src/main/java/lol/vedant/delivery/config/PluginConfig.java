@@ -5,6 +5,7 @@
 package lol.vedant.delivery.config;
 
 import lol.vedant.delivery.Delivery;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -22,16 +23,9 @@ public class PluginConfig {
         if(!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdir();
         }
+        plugin.saveResource(name, false);
 
         this.file = new File(plugin.getDataFolder(), name);
-
-        if(!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         this.config = YamlConfiguration.loadConfiguration(file);
 

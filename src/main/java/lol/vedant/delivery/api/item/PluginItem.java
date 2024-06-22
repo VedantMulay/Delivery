@@ -4,12 +4,15 @@
 
 package lol.vedant.delivery.api.item;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 
 import java.util.List;
 
 public class PluginItem {
+
+    private final ConfigurationSection config;
 
     private String displayName;
     private List<String> lore;
@@ -19,6 +22,15 @@ public class PluginItem {
     private String material;
     private int amount;
 
+
+
+    public PluginItem(ConfigurationSection config) {
+        this.config = config;
+    }
+
+    public ConfigurationSection getConfig() {
+        return config;
+    }
 
     public String getDisplayName() {
         return displayName;
