@@ -9,6 +9,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import lol.vedant.delivery.Delivery;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
@@ -83,10 +85,26 @@ public class MySQL implements Database {
             e.printStackTrace();
         }
 
+        createTables();
+
     }
 
     @Override
     public void createTables() {
+        String sql = "CREATE TABLE IF NOT EXISTS player_deliveries (" +
+                "id INT(6) AUTO_INCREMENT PRIMARY KEY," +
+                "uuid VARCHAR(36) UNIQUE NOT NULL," +
+                "name VARCHAR(32)," +
+                "delivery_id VARCHAR(255)," +
+                "last_claim DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP";
 
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+
 }

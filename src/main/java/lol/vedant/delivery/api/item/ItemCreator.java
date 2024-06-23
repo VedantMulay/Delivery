@@ -1,6 +1,7 @@
 package lol.vedant.delivery.api.item;
 
-import lol.vedant.delivery.hooks.OraxenHook;
+import lol.vedant.delivery.hook.OraxenHook;
+import lol.vedant.delivery.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -69,40 +70,51 @@ public class ItemCreator {
         if (material.startsWith("oraxen-")) {
             String oraxenId = material.replace("oraxen-", "");
 
+            //Check for invalid ID's for Oraxen
             if (!OraxenHook.exists(oraxenId)) {
-                throw new Exception("Invalid Oraxen Item. Please check the ID and try again");
+                itemStack = new ItemStack(Material.BARRIER);
+                meta = itemStack.getItemMeta();
+                meta.setDisplayName(Utils.cc("&cInvalid Oraxen Material ID"));
+                itemStack.setItemMeta(meta);
+                return;
             }
+
             this.itemStack = OraxenHook.getItem(oraxenId);
 
         } else {
             Material bukkitMaterial = Material.getMaterial(material.toUpperCase());
 
+            //Check for invalid ID's for Bukkit
             if (bukkitMaterial == null || !bukkitMaterial.isItem()) {
-                throw new Exception("Invalid Bukkit Material ID. Please check the ID and try again.");
+                itemStack = new ItemStack(Material.BARRIER);
+                meta = itemStack.getItemMeta();
+                meta.setDisplayName(Utils.cc("&cInvalid Bukkit Material ID"));
+                itemStack.setItemMeta(meta);
+                return;
             }
 
             this.itemStack = new ItemStack(bukkitMaterial);
         }
 
         this.meta = itemStack.getItemMeta();
-        if (meta == null) {
-            throw new Exception("Failed to retrieve ItemMeta from ItemStack.");
-        }
 
         if (config.contains("name")) {
-            meta.setDisplayName(config.getString("name"));
+            meta.setDisplayName(Utils.cc(config.getString("name")));
         }
 
         if (config.contains("lore")) {
-            meta.setLore(config.getStringList("lore"));
+            meta.setLore(Utils.cc(config.getStringList("lore")));
         }
 
         if (config.contains("enchantments")) {
             List<String> enchantments = config.getStringList("enchantments");
+
             for (String enchant : enchantments) {
                 String[] enchants = enchant.split(";");
+
                 if (enchants.length == 2) {
                     Enchantment enchantment = ENCHANTMENT_MAP.get(enchants[0].toUpperCase());
+
                     if (enchantment != null) {
                         int level;
                         try {
@@ -110,10 +122,12 @@ public class ItemCreator {
                         } catch (NumberFormatException e) {
                             throw new Exception("Invalid enchantment level for " + enchants[0], e);
                         }
-                        itemStack.addUnsafeEnchantment(enchantment, level);  // Use unsafe method to bypass limits
+
+                        itemStack.addUnsafeEnchantment(enchantment, level);
                     } else {
                         throw new Exception("Invalid enchantment name: " + enchants[0]);
                     }
+
                 } else {
                     throw new Exception("Enchantment format should be 'ENCHANTMENT_NAME;LEVEL'");
                 }

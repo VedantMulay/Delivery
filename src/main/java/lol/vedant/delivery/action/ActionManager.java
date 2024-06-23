@@ -38,7 +38,9 @@ public class ActionManager {
                 new PotionEffectAction(),
                 new ServerBroadcastAction(),
                 new SoundAction(),
-                new TitleAction()
+                new TitleAction(),
+                new OpenAction(),
+                new CloseAction()
         );
     }
 

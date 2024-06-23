@@ -4,15 +4,13 @@
 
 package lol.vedant.delivery.api.item;
 
-import org.bukkit.configuration.ConfigurationSection;
+import lol.vedant.delivery.menu.ItemType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 
 import java.util.List;
 
 public class PluginItem {
-
-    private final ConfigurationSection config;
 
     private String displayName;
     private List<String> lore;
@@ -21,15 +19,15 @@ public class PluginItem {
     private int customModelId;
     private String material;
     private int amount;
+    private ItemType type;
 
 
-
-    public PluginItem(ConfigurationSection config) {
-        this.config = config;
+    public ItemType getType() {
+        return type;
     }
 
-    public ConfigurationSection getConfig() {
-        return config;
+    public void setType(ItemType type) {
+        this.type = type;
     }
 
     public String getDisplayName() {

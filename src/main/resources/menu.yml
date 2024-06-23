@@ -1,0 +1,28 @@
+# You can arrange your delivery items as well as
+# add additional items to your delivery GUI.
+# there should be a main "delivery" GUI for the
+# /delivery command rest of the menus you can
+# access through /delivery <Menu ID>
+
+delivery:
+  rows: 6
+  title: "Delivery Menu"
+  items:
+
+    delivery-item:
+      type: DELIVERY
+      slot: 13
+      delivery-id: daily-delivery
+
+    close-item:
+      type: ITEM
+      slot: 22
+      material: BARRIER
+      name: "&cClose"
+      lore:
+        - "&fClose the menu."
+      enchantments:
+        - PROTECTION;3
+        - UNBREAKING;2
+      item_flags:
+        - HIDE_ENCHANTS

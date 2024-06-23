@@ -11,7 +11,6 @@ import java.time.Duration;
 public class PlayerDelivery {
 
     private final String id;
-    private final String parentId;
 
     private ItemStack claimItem;
     private ItemStack noPermissionItem;
@@ -23,13 +22,8 @@ public class PlayerDelivery {
     private Duration claimInterval;
 
 
-    public PlayerDelivery(String parentId, String id) {
+    public PlayerDelivery(String id) {
         this.id = id;
-        this.parentId = parentId;
-    }
-
-    public String getParentId() {
-        return parentId;
     }
 
     public String getId() {

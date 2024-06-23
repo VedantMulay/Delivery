@@ -1,48 +1,42 @@
-default:
-  daily-delivery:
-    permission: 'delivery.claim.default'
-    slot: 13
-    claim_interval: 24h
-    filler_item:
-      material: BLACK_STAINED_GLASS
-    item:
-      material: CHEST_MINECART
-      name: "&7Daily Delivery"
-      lore:
-        - "&fClaim your daily delivery"
-        - ""
-        - "&cYou don't have permission to claim this reward."
-      enchantments:
-        - PROTECTION;3
-        - UNBREAKING;2
-      item_flags:
-        - HIDE_ENCHANTS
-        - HIDE_ADDITIONAL_TOOLTIP
-      custom_model_id: 0
-    claimed_item:
-      material: MINECART
-      name: "&7Daily Delivery &e&lCLAIMED"
-      lore:
-        - "&fYou have claimed your daily delivery please come back later."
-        - ""
-        - "&cYou don't have permission to claim this reward."
-      enchantments:
-        - PROTECTION;3
-        - UNBREAKING;2
-      item_flags:
-        - HIDE_ENCHANTS
-        - HIDE_ADDITIONAL_TOOLTIP
-      custom_model_id: 0
-    no_permission_item:
-      material: MINECART
-      name: "&7Daily Delivery"
-      lore:
-        - "&fClaim your daily delivery"
-        - ""
-        - "&cYou don't have permission to claim this reward."
-      enchantments:
-        - PROTECTION;3
-        - UNBREAKING;2
-      item_flags:
-        - HIDE_ENCHANTS
-      custom_model_id: 0
+daily-delivery:
+  permission: 'delivery.claim.default'
+  claim_interval: 24h
+  item:
+    material: CHEST_MINECART
+    name: "&7Daily Delivery"
+    lore:
+      - "&fClaim your daily delivery"
+      - ""
+      - "&cYou don't have permission to claim this reward."
+    enchantments:
+      - PROTECTION;3
+      - UNBREAKING;2
+    item_flags:
+      - HIDE_ENCHANTS
+    custom_model_id: 0
+  claimed_item:
+    material: MINECART
+    name: "&7Daily Delivery &e&lCLAIMED"
+    lore:
+      - "&fYou have claimed your daily delivery please come back later."
+      - ""
+      - "&cYou don't have permission to claim this reward."
+    enchantments:
+      - PROTECTION;3
+      - UNBREAKING;2
+    item_flags:
+      - HIDE_ENCHANTS
+    custom_model_id: 0
+  no_permission_item:
+    material: MINECART
+    name: "&7Daily Delivery"
+    lore:
+      - "&fClaim your daily delivery"
+      - ""
+      - "&cYou don't have permission to claim this reward."
+    enchantments:
+      - PROTECTION;3
+      - UNBREAKING;2
+    item_flags:
+      - HIDE_ENCHANTS
+    custom_model_id: 0

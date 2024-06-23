@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2024 Vedant Mulay. All rights reserved.
- */
-
 package lol.vedant.delivery.api.menu;
 
 import org.bukkit.Bukkit;
@@ -23,6 +19,28 @@ public abstract class Menu implements InventoryHolder {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+        if (inventory != null) {
+            inventory = Bukkit.createInventory(this, size, title);
+        }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+        if (inventory != null) {
+            inventory = Bukkit.createInventory(this, size, title);
+        }
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public abstract void handleMenuClick(InventoryClickEvent e);

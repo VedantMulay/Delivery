@@ -12,6 +12,7 @@ public class ConfigManager {
     private final PluginConfig config;
     private final PluginConfig lang;
     private final PluginConfig gui;
+    private final PluginConfig menu;
     private final Delivery plugin;
 
     public ConfigManager(Delivery plugin) {
@@ -19,6 +20,7 @@ public class ConfigManager {
         this.config = new PluginConfig(plugin, "config.yml");
         this.lang = new PluginConfig(plugin, "lang.yml");
         this.gui = new PluginConfig(plugin, "deliveries.yml");
+        this.menu = new PluginConfig(plugin, "menu.yml");
     }
 
     public YamlConfiguration getConfig() {
@@ -31,6 +33,10 @@ public class ConfigManager {
 
     public YamlConfiguration getGUI() {
         return this.gui.getConfig();
+    }
+
+    public YamlConfiguration getMenu() {
+        return this.menu.getConfig();
     }
 
 }

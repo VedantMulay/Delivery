@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Utils {
     private static Delivery plugin = Delivery.getInstance();
@@ -19,6 +20,11 @@ public class Utils {
         return IridiumColorAPI.process(message);
     }
 
+    public static List<String> cc(List<String> messages) {
+        return messages.stream()
+                .map(IridiumColorAPI::process)
+                .collect(Collectors.toList());
+    }
     public static String fromList(List<?> list) {
         if (list == null || list.isEmpty()) return null;
         StringBuilder builder = new StringBuilder();

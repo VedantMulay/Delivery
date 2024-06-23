@@ -2,7 +2,7 @@
  * Copyright (c) 2024 Vedant Mulay. All rights reserved.
  */
 
-package lol.vedant.delivery.hooks;
+package lol.vedant.delivery.hook;
 
 import io.th0rgal.oraxen.api.OraxenItems;
 import io.th0rgal.oraxen.compatibilities.CompatibilityProvider;
@@ -18,4 +18,6 @@ public class OraxenHook extends CompatibilityProvider<Delivery> {
     public static boolean exists(String id) {
         return OraxenItems.exists(id);
     }
+
+
 }

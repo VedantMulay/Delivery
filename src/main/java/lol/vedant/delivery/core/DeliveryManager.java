@@ -34,23 +34,14 @@ public class DeliveryManager {
     }
 
     public void load() throws Exception {
-        Set<String> pageIds = deliveryFile.getKeys(false);
-
-        System.out.println(pageIds);
-
         plugin.getLogger().info("Loading deliveries data...");
 
-        for (String pageId : pageIds) {
-            Set<String> deliveryIds = deliveryFile.getConfigurationSection(pageId).getKeys(false);
-
-            System.out.println(deliveryIds);
-
-            plugin.getLogger().info("Loaded page: " + pageId);
+            Set<String> deliveryIds = deliveryFile.getKeys(false);
 
             for (String deliveryId : deliveryIds) {
-                ConfigurationSection delivery = deliveryFile.getConfigurationSection(pageId + "." + deliveryId);
+                ConfigurationSection delivery = deliveryFile.getConfigurationSection(deliveryId);
                 if (delivery == null) {
-                    plugin.getLogger().warning("Delivery section is null for pageId: " + pageId + " deliveryId: " + deliveryId);
+                    plugin.getLogger().warning("Delivery section is null for deliveryId: " + deliveryId);
                     continue;
                 }
 
@@ -58,7 +49,7 @@ public class DeliveryManager {
                 ConfigurationSection noPermissionItem = delivery.getConfigurationSection("no_permission_item");
                 ConfigurationSection claimedItem = delivery.getConfigurationSection("claimed_item");
 
-                PlayerDelivery playerDelivery = new PlayerDelivery(pageId, deliveryId);
+                PlayerDelivery playerDelivery = new PlayerDelivery(deliveryId);
 
                 if (claimItem != null) {
                     playerDelivery.setClaimItem(new ItemCreator(claimItem).build());
@@ -95,7 +86,6 @@ public class DeliveryManager {
 
                 deliveries.put(deliveryId, playerDelivery);
             }
-        }
 
         plugin.getLogger().info("Loaded all deliveries...");
     }
@@ -104,14 +94,6 @@ public class DeliveryManager {
     public PlayerDelivery getDelivery(String id) {
         return deliveries.get(id);
     }
-
-    public List<PlayerDelivery> getDeliveriesByParentId(String parentId) {
-        return deliveries.values().stream()
-                .filter(delivery -> delivery.getParentId().equals(parentId))
-                .collect(Collectors.toList());
-    }
-
-
 
 
 }
