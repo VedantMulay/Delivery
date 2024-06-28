@@ -12,9 +12,12 @@ import me.despical.commandframework.CommandArguments;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+
+
 public class DeliveryCommand {
 
 
+    private Delivery plugin = Delivery.getInstance();
 
     @Command(
             name = "delivery",
@@ -24,15 +27,27 @@ public class DeliveryCommand {
     )
 
     public void execute(CommandArguments args) {
-
-        CommandSender sender = args.getSender();
+        if(!(args.getSender() instanceof Player)) {
+            return;
+        }
+        Player sender = args.getSender();
 
         if(args.isSenderConsole()) {
             sender.sendMessage("This command can only be executed by a player.");
             return;
         }
 
-        Delivery.getInstance().getMenuManager().openMenu((Player) sender, new DeliveryMenu((Player) sender, "delivery"));
+        if(args.getArguments().length == 0) {
+            Delivery.getInstance().getMenuManager().openMenu(sender, new DeliveryMenu(sender, "delivery"));
+        } else {
+            if(plugin.getMenuLoader().getPage(args.getArgument(0)) != null) {
+                Delivery.getInstance().getMenuManager().openMenu(sender, new DeliveryMenu(sender, args.getArgument(0)));
+            } else {
+                // Page not found message
+            }
+        }
+
+
 
 
     }

@@ -7,3 +7,4 @@ DELIVERY:
   CLAIM: "{prefix} &fYou claimed the &#00FF97{delivery} &fsuccessfully."
   NO_PERMISSION: "{prefix} &#FF0042You do not have permission to claim this delivery."
   WAIT: "{prefix} &#FF0042Please wait {time} to claim this delivery."
+  PAGE_NOT_FOUND: "{prefix} &#FF0042Page not found."

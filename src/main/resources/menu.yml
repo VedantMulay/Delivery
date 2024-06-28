@@ -26,3 +26,5 @@ delivery:
         - UNBREAKING;2
       item_flags:
         - HIDE_ENCHANTS
+      actions:
+        - "[CLOSE]"

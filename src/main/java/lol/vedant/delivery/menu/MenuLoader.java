@@ -43,11 +43,15 @@ public class MenuLoader {
                 try {
                     if (ItemType.valueOf(itemType) == ItemType.ITEM) {
                         ItemStack itemStack = new ItemCreator(item).build();
+
                         NBT.modify(itemStack, nbt -> {
                             nbt.setString("Delivery.Type", "ITEM");
                         });
 
-                        page.addItem(new MenuItem(ItemType.ITEM, slot, itemStack));
+                        MenuItem mItem = new MenuItem(ItemType.ITEM, slot, itemStack);
+                        mItem.setActions(item.getStringList("actions"));
+                        page.addItem(mItem);
+
                     } else if (ItemType.valueOf(itemType) == ItemType.DELIVERY) {
                         String deliveryId = item.getString("delivery-id");
 

@@ -13,7 +13,14 @@ import java.util.List;
 
 public enum Message {
 
-    PREFIX("GENERAL.PREFX");
+    PREFIX("GENERAL.PREFX"),
+    NO_PERMISSION("GENERAL.NO_PERMISSION"),
+    PLAYER_ONLY("GENERAL.PLAYER_ONLY"),
+
+    DELIVERY_CLAIM("DELIVERY.CLAIM"),
+    DELIVERY_NO_PERMISSION("DELIVERY.NO_PERMISSION"),
+    DELIVERY_WAIT("DELIVERY.WAIT");
+
 
     private final String path;
     private static FileConfiguration config;

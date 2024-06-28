@@ -7,6 +7,8 @@ package lol.vedant.delivery.core;
 import org.bukkit.inventory.ItemStack;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerDelivery {
 
@@ -21,6 +23,8 @@ public class PlayerDelivery {
     private String permission;
     private Duration claimInterval;
 
+    private List<String> fixedActions;
+    private Map<String, List<String>> randomActions;
 
     public PlayerDelivery(String id) {
         this.id = id;
@@ -84,5 +88,25 @@ public class PlayerDelivery {
 
     public void setClaimInterval(Duration claimInterval) {
         this.claimInterval = claimInterval;
+    }
+
+    public List<String> getFixedActions() {
+        return fixedActions;
+    }
+
+    public void setFixedActions(List<String> fixedActions) {
+        this.fixedActions = fixedActions;
+    }
+
+    public Map<String, List<String>> getRandomActions() {
+        return randomActions;
+    }
+
+    public void setRandomActions(Map<String, List<String>> randomActions) {
+        this.randomActions = randomActions;
+    }
+
+    public void addRandomAction(String action, List<String> actionList) {
+        this.randomActions.put(action, actionList);
     }
 }

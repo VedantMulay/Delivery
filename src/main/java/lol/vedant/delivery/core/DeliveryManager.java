@@ -112,6 +112,22 @@ public class DeliveryManager {
                     }
                 }
 
+                if(delivery.contains("actions")) {
+                    playerDelivery.setFixedActions(delivery.getStringList("actions"));
+                }
+
+                if(delivery.contains("random_actions")) {
+                    ConfigurationSection randomActionsSection = delivery.getConfigurationSection("random_actions");
+                    Map<String, List<String>> randomActions = new HashMap<>();
+                    if(randomActionsSection == null) {
+                        break;
+                    }
+                    for (String key : randomActionsSection.getKeys(false)) {
+                        randomActions.put(key, randomActionsSection.getStringList(key));
+                    }
+                    playerDelivery.setRandomActions(randomActions);
+                }
+
                 playerDelivery.setClaimInterval(TimeUtils.parseDuration(delivery.getString("claim_interval")));
 
                 deliveries.put(deliveryId, playerDelivery);
@@ -127,6 +143,40 @@ public class DeliveryManager {
 
     public boolean canClaim(Player player, String deliveryId) {
         return plugin.getDatabase().canClaim(player, deliveryId);
+    }
+
+    public String getTimeUntilClaim(Player player, String deliveryId) {
+        return TimeUtils.formatDuration(plugin.getDatabase().getTimeUntilClaim(player, deliveryId));
+    }
+
+    public void claimDelivery(Player player, String deliveryId) {
+        PlayerDelivery delivery = deliveries.get(deliveryId);
+
+        if(player.hasPermission(delivery.getPermission())) {
+            if (canClaim(player, deliveryId)) {
+                plugin.getDatabase().setClaimed(player, deliveryId);
+
+
+            } else {
+                //Send the message of remaining time to the player
+            }
+
+
+        } else {
+            // No Permission Message
+        }
+
+
+    }
+
+    public static List<String> getRandomAction(PlayerDelivery delivery) {
+        Map<String, List<String>> randomActions = delivery.getRandomActions();
+        if (randomActions != null && !randomActions.isEmpty()) {
+            List<String> keys = new ArrayList<>(randomActions.keySet());
+            String randomKey = keys.get(new Random().nextInt(keys.size()));
+            return randomActions.get(randomKey);
+        }
+        return null;
     }
 
 

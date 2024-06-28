@@ -7,6 +7,7 @@ package lol.vedant.delivery.utils;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,30 +50,44 @@ public class TimeUtils {
         return String.format("%d days, %d hours, %d minutes, %d seconds", days, hours, minutes, seconds);
     }
 
-    public static Duration parseDuration(String input) {
-        // Define regex pattern to extract days, hours, minutes, and seconds
-        Pattern pattern = Pattern.compile("(?:(\\d+)d)?\\s*(?:(\\d+)h)?\\s*(?:(\\d+)m)?\\s*(?:(\\d+)s)?");
-        Matcher matcher = pattern.matcher(input);
-
-        int days = 0;
-        int hours = 0;
-        int minutes = 0;
-        int seconds = 0;
-
-        if (matcher.matches()) {
-            if (matcher.group(1) != null) days = Integer.parseInt(matcher.group(1));
-            if (matcher.group(2) != null) hours = Integer.parseInt(matcher.group(2));
-            if (matcher.group(3) != null) minutes = Integer.parseInt(matcher.group(3));
-            if (matcher.group(4) != null) seconds = Integer.parseInt(matcher.group(4));
-        } else {
-            throw new IllegalArgumentException("Invalid duration format");
+    /*
+        Taken From https://www.spigotmc.org/threads/parsing-time-with-strings.162162/
+    */
+    public static Duration parseDuration(String string) {
+        if (string == null || string.isEmpty())
+            return Duration.ZERO;
+        // this replaces the regex for 0-9 and the other characters
+        string = string.replaceAll("[^0-9smhdw]", "");
+        // checks if the new string is empty since we removed some characters
+        if (string.isEmpty())
+            return Duration.ZERO;
+        // Check if string contains "w"
+        if (string.contains("w")) {
+            // Replace all non numbers with nothing
+            string = string.replaceAll("[^0-9]", "");
+            // Another empty check
+            if (string.isEmpty())
+                return Duration.ZERO;
+            // If it has a number we change the number value to days by
+            // multiplying by 7 then we can change it to seconds
+            return Duration.ofSeconds(TimeUnit.DAYS.toSeconds(Long.parseLong(string) * 7));
         }
-
-        long totalSeconds = seconds
-                + minutes * 60
-                + hours * 3600
-                + days * 86400;
-
-        return Duration.ofSeconds(totalSeconds);
+        // First we check for days using "d"
+        TimeUnit unit = string.contains("d") ? TimeUnit.DAYS
+                // If the string contains "h" it goes for hours
+                : string.contains("h") ? TimeUnit.HOURS
+                // If the string contains "m" it goes for minutes
+                : string.contains("m") ? TimeUnit.MINUTES
+                // Finally, if none match we go with seconds
+                : TimeUnit.SECONDS;
+        // Next we replace all the non-numbers with nothing so it can match a
+        // number
+        string = string.replaceAll("[^0-9]", "");
+        // Another empty check to make sure something is there
+        if (string.isEmpty())
+            return Duration.ZERO;
+        // Then we return the string as a long in seconds using the unit
+        // selected earlier
+        return Duration.ofSeconds(unit.toSeconds(Long.parseLong(string)));
     }
 }
