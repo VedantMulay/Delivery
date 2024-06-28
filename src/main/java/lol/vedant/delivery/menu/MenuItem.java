@@ -1,9 +1,10 @@
 package lol.vedant.delivery.menu;
 
 import lol.vedant.delivery.Delivery;
-import lol.vedant.delivery.data.PlayerDelivery;
+import lol.vedant.delivery.core.PlayerDelivery;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +18,7 @@ public class MenuItem {
     private static Delivery plugin = Delivery.getInstance();
     private final int slot;
     private static final Logger logger = Logger.getLogger(MenuItem.class.getName());
+    private List<String> actions;
 
     // Constructor for ITEM type
     public MenuItem(ItemType itemType, int slot, ItemStack item) {
@@ -82,5 +84,13 @@ public class MenuItem {
 
     public ItemStack getNormalItem() {
         return normalItem;
+    }
+
+    public List<String> getActions() {
+        return actions;
+    }
+
+    public void setActions(List<String> actions) {
+        this.actions = actions;
     }
 }

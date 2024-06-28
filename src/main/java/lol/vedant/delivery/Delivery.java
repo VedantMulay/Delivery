@@ -9,6 +9,7 @@ import lol.vedant.delivery.action.ActionManager;
 import lol.vedant.delivery.api.menu.MenuListener;
 import lol.vedant.delivery.api.menu.MenuManager;
 import lol.vedant.delivery.commands.DeliveryCommand;
+import lol.vedant.delivery.commands.GetDeliveryItemCommand;
 import lol.vedant.delivery.config.ConfigManager;
 import lol.vedant.delivery.core.DeliveryManager;
 import lol.vedant.delivery.database.Database;
@@ -16,7 +17,10 @@ import lol.vedant.delivery.database.MySQL;
 import lol.vedant.delivery.database.SQLite;
 import lol.vedant.delivery.hook.OraxenHook;
 import lol.vedant.delivery.menu.MenuLoader;
+import lol.vedant.delivery.utils.Message;
 import me.despical.commandframework.CommandFramework;
+import net.jitse.npclib.NPCLib;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,21 +33,23 @@ public final class Delivery extends JavaPlugin  {
     private ConfigManager configManager;
     private ActionManager actionManager;
     private DeliveryManager deliveryManager;
+    private Metrics metrics;
     private Database database;
 
     private static Delivery instance;
-
+    private NPCLib npcLib;
 
     @Override
     public void onEnable() {
-        CompatibilitiesManager.addCompatibility("Delivery", OraxenHook.class);
 
         instance = this;
+
         //Load the managers
         configManager = new ConfigManager(this);
         deliveryManager = new DeliveryManager(this);
         commandManager = new CommandFramework(this);
         commandManager.registerCommands(new DeliveryCommand());
+        commandManager.registerCommands(new GetDeliveryItemCommand());
         actionManager = new ActionManager(this);
         menuManager = new MenuManager(this);
 
@@ -59,12 +65,23 @@ public final class Delivery extends JavaPlugin  {
 
         registerEvents();
         hooks();
+
+        if(getConfiguration().getBoolean("enable-bstats")) {
+            metrics = new Metrics(this, 22385);
+            getLogger().info("Loaded bStats...");
+        }
+
+        this.npcLib = new NPCLib(this);
+
+        Message.setConfiguration(getLang());
+
+
     }
 
 
     @Override
     public void onDisable() {
-
+        metrics.shutdown();
     }
 
     public void hooks() {
@@ -73,6 +90,7 @@ public final class Delivery extends JavaPlugin  {
         }
 
         if(Bukkit.getPluginManager().isPluginEnabled("Oraxen")) {
+            CompatibilitiesManager.addCompatibility("Delivery", OraxenHook.class);
             getLogger().info("Hooked into Oraxen");
         }
 
@@ -81,6 +99,9 @@ public final class Delivery extends JavaPlugin  {
         }
     }
 
+    public Database getDatabase() {
+        return database;
+    }
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new MenuListener(menuManager), this);
@@ -116,5 +137,13 @@ public final class Delivery extends JavaPlugin  {
 
     public MenuLoader getMenuLoader() {
         return menuLoader;
+    }
+
+    public ActionManager getActionManager() {
+        return actionManager;
+    }
+
+    public NPCLib getNPCLib() {
+        return npcLib;
     }
 }

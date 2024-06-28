@@ -1,0 +1,13 @@
+
+resource-pack: true
+
+npc:
+  default:
+    location:
+    hologram:
+      - '&b&lDelivery'
+      - '&fRight-Click to collect your deliveries'
+
+
+
+enable-bstats: true

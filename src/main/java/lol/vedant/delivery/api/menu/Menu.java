@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class Menu implements InventoryHolder {
 
@@ -15,6 +16,7 @@ public abstract class Menu implements InventoryHolder {
         this.title = title;
         this.size = size;
         this.inventory = Bukkit.createInventory(this, size, title);
+        setMenuItems();
     }
 
     public Inventory getInventory() {
@@ -25,6 +27,7 @@ public abstract class Menu implements InventoryHolder {
         this.title = title;
         if (inventory != null) {
             inventory = Bukkit.createInventory(this, size, title);
+            setMenuItems();
         }
     }
 
@@ -36,6 +39,7 @@ public abstract class Menu implements InventoryHolder {
         this.size = size;
         if (inventory != null) {
             inventory = Bukkit.createInventory(this, size, title);
+            setMenuItems();
         }
     }
 
@@ -44,4 +48,11 @@ public abstract class Menu implements InventoryHolder {
     }
 
     public abstract void handleMenuClick(InventoryClickEvent e);
+
+    public abstract void setMenuItems();
+
+    public void reloadItems() {
+        inventory.clear();
+        setMenuItems();
+    }
 }

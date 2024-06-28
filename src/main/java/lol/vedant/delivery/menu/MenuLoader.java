@@ -1,5 +1,7 @@
 package lol.vedant.delivery.menu;
 
+
+import de.tr7zw.changeme.nbtapi.NBT;
 import lol.vedant.delivery.Delivery;
 import lol.vedant.delivery.api.item.ItemCreator;
 import org.bukkit.configuration.ConfigurationSection;
@@ -41,11 +43,14 @@ public class MenuLoader {
                 try {
                     if (ItemType.valueOf(itemType) == ItemType.ITEM) {
                         ItemStack itemStack = new ItemCreator(item).build();
-                        logger.log(Level.FINE, "Adding ITEM to menu {0}, slot {1}", new Object[]{menu, slot});
+                        NBT.modify(itemStack, nbt -> {
+                            nbt.setString("Delivery.Type", "ITEM");
+                        });
+
                         page.addItem(new MenuItem(ItemType.ITEM, slot, itemStack));
                     } else if (ItemType.valueOf(itemType) == ItemType.DELIVERY) {
                         String deliveryId = item.getString("delivery-id");
-                        logger.log(Level.FINE, "Adding DELIVERY item to menu {0}, slot {1}, delivery ID {2}", new Object[]{menu, slot, deliveryId});
+
                         page.addItem(new MenuItem(ItemType.DELIVERY, slot, deliveryId));
                     } else {
                         logger.log(Level.WARNING, "Unknown item type {0} in menu {1}, skipping", new Object[]{itemType, menu});

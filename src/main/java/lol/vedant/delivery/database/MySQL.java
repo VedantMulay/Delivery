@@ -7,11 +7,14 @@ package lol.vedant.delivery.database;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lol.vedant.delivery.Delivery;
+import lol.vedant.delivery.core.DeliveryManager;
+import lol.vedant.delivery.core.PlayerDelivery;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class MySQL implements Database {
@@ -105,6 +108,88 @@ public class MySQL implements Database {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void createUser(Player player) {
+        String sql = "INSERT INTO player_deliveries (" +
+                "uuid, name, delivery_i" +
+                "d, last_claim) VALUES (" +
+                "?, ?, ?, ?";
+        for (PlayerDelivery delivery : DeliveryManager.deliveries.values()) {
+
+            try(Connection connection = dataSource.getConnection()) {
+
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, player.getUniqueId().toString());
+                ps.setString(2, player.getName());
+                ps.setString(3, delivery.getId());
+                ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+                ps.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    @Override
+    public boolean canClaim(UUID uuid, String deliveryId) {
+        String sql = "SELECT * FROM player_deliveries WHERE uuid?";
+        if(exists(uuid, deliveryId)) {
+
+        }
+
+        return false;
+    }
+
+    public boolean exists(UUID uuid, String deliveryId) {
+        String sql = "SELECT * FROM player_deliveries WHERE uuid=? AND delivery_id=?";
+
+        try(Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, uuid.toString());
+            ps.setString(2, deliveryId);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void setClaimed(Player player, String deliveryId) {
+        String sql;
+        try (Connection connection = dataSource.getConnection()) {
+            if(!exists(player.getUniqueId(), deliveryId)) {
+                sql = "INSERT INTO player_deliveries (" +
+                        "uuid, name, delivery_id, last_claim)" +
+                        "VALUES (?, ?, ?, ?)";
+
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, player.getUniqueId().toString());
+                ps.setString(2, player.getName());
+                ps.setString(3, deliveryId);
+                ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+                ps.executeUpdate();
+            } else {
+                sql = "UPDATE player_deliveries SET " +
+                        "";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
 
 
 }

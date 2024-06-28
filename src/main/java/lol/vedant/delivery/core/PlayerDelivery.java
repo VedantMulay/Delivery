@@ -2,7 +2,7 @@
  * Copyright (c) 2024 Vedant Mulay. All rights reserved.
  */
 
-package lol.vedant.delivery.data;
+package lol.vedant.delivery.core;
 
 import org.bukkit.inventory.ItemStack;
 

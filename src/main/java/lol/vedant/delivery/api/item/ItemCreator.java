@@ -1,5 +1,7 @@
 package lol.vedant.delivery.api.item;
 
+import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import lol.vedant.delivery.hook.OraxenHook;
 import lol.vedant.delivery.utils.Utils;
 import org.bukkit.Material;
@@ -149,7 +151,33 @@ public class ItemCreator {
             meta.setCustomModelData(config.getInt("custom_model_id"));
         }
 
+        if(config.contains("nbt")) {
+            applyNbtFromConfig(itemStack, config.getConfigurationSection("nbt"));
+        }
+
         this.itemStack.setItemMeta(this.meta);
+    }
+
+    private void applyNbtFromConfig(ItemStack itemStack, ConfigurationSection nbtSection) {
+        NBTItem nbtItem = new NBTItem(itemStack);
+
+        for (String key : nbtSection.getKeys(false)) {
+            Object value = nbtSection.get(key);
+
+            if (value instanceof ConfigurationSection) {
+                NBTCompound compound = nbtItem.addCompound(key);
+                setCompoundTags(compound, (ConfigurationSection) value);
+            } else {
+                nbtItem.setObject(key, value);
+            }
+        }
+    }
+
+    private void setCompoundTags(NBTCompound compound, ConfigurationSection section) {
+        for (String key : section.getKeys(false)) {
+            Object value = section.get(key);
+            compound.setObject(key, value);
+        }
     }
 
     public ItemStack build() {
