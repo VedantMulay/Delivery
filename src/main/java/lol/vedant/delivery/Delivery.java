@@ -16,10 +16,10 @@ import lol.vedant.delivery.database.Database;
 import lol.vedant.delivery.database.MySQL;
 import lol.vedant.delivery.database.SQLite;
 import lol.vedant.delivery.hook.OraxenHook;
+import lol.vedant.delivery.listeners.JoinListener;
 import lol.vedant.delivery.menu.MenuLoader;
 import lol.vedant.delivery.utils.Message;
 import me.despical.commandframework.CommandFramework;
-import net.jitse.npclib.NPCLib;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,7 +37,6 @@ public final class Delivery extends JavaPlugin  {
     private Database database;
 
     private static Delivery instance;
-    private NPCLib npcLib;
 
     @Override
     public void onEnable() {
@@ -71,7 +70,6 @@ public final class Delivery extends JavaPlugin  {
             getLogger().info("Loaded bStats...");
         }
 
-        this.npcLib = new NPCLib(this);
 
         Message.setConfiguration(getLang());
 
@@ -105,6 +103,7 @@ public final class Delivery extends JavaPlugin  {
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new MenuListener(menuManager), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(), this);
     }
 
     public MenuManager getMenuManager() {
@@ -143,7 +142,4 @@ public final class Delivery extends JavaPlugin  {
         return actionManager;
     }
 
-    public NPCLib getNPCLib() {
-        return npcLib;
-    }
 }

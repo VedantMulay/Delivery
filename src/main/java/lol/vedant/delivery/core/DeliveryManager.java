@@ -126,9 +126,9 @@ public class DeliveryManager {
     }
 
     public boolean canClaim(Player player, String deliveryId) {
-
-        return false;
+        return plugin.getDatabase().canClaim(player, deliveryId);
     }
+
 
 
 }
