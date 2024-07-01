@@ -26,7 +26,6 @@ import me.despical.commandframework.CommandFramework;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Delivery extends JavaPlugin  {

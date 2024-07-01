@@ -51,7 +51,6 @@ public class DeliveryMenu extends Menu {
 
     @Override
     public void handleMenuClose(InventoryCloseEvent event) {
-        player.sendMessage("You closed the menu. The scheduler has been closed.");
         Bukkit.getScheduler().cancelTask(reloadTask);
     }
 
@@ -113,11 +112,9 @@ public class DeliveryMenu extends Menu {
 
                     } else {
                         getInventory().setItem(item.getSlot(), PlaceholderParse.parsePlaceholders(item.getClaimedItem(), player));
-                        System.out.println(item.getClaimedItem());
                     }
                 } else {
                     getInventory().setItem(item.getSlot(), PlaceholderParse.parsePlaceholders(item.getNoPermissionItem(), player));
-                    System.out.println(item.getNoPermissionItem());
                 }
             }
         }

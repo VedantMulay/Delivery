@@ -29,6 +29,22 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/libs</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
                 <configuration>
@@ -40,11 +56,31 @@
                     <relocations>
                         <relocation>
                             <pattern>de.tr7zw.changeme.nbtapi</pattern>
-                            <shadedPattern>lol.vedant.delivery.nbt-api</shadedPattern>
+                            <shadedPattern>lol.vedant.delivery.libs.nbt-api</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>lol.vedant.delivery.metrics</shadedPattern>
+                            <shadedPattern>lol.vedant.delivery.libs.metrics</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>me.despical</pattern>
+                            <shadedPattern>lol.vedant.delivery.libs.commandframework</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.zaxxer</pattern>
+                            <shadedPattern>lol.vedant.delivery.libs.hikaricp</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.iridium</pattern>
+                            <shadedPattern>lol.vedant.delivery.libs.iridiumcolor-api</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.slf4j</pattern>
+                            <shadedPattern>lol.vedant.delivery.libs.slf4j</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.jeff_media</pattern>
+                            <shadedPattern>lol.vedant.delivery.libs.utils</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -109,11 +145,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>24.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.Despical</groupId>
@@ -194,12 +225,6 @@
             <version>4.0.3</version>
         </dependency>
         <dependency>
-            <groupId>com.github.LoneDev6</groupId>
-            <artifactId>api-itemsadder</artifactId>
-            <version>3.6.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api</artifactId>
             <version>2.13.1</version>
@@ -209,11 +234,6 @@
             <artifactId>ProtocolLib</artifactId>
             <version>5.1.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.12.7</version>
         </dependency>
     </dependencies>
 </project>
