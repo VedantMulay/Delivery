@@ -4,6 +4,7 @@
 
 package lol.vedant.delivery.utils;
 
+import lol.vedant.delivery.Delivery;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public enum Message {
 
-    PREFIX("GENERAL.PREFX"),
+    PREFIX("GENERAL.PREFIX"),
     NO_PERMISSION("GENERAL.NO_PERMISSION"),
     PLAYER_ONLY("GENERAL.PLAYER_ONLY"),
 
@@ -36,6 +37,8 @@ public enum Message {
     public void send(CommandSender receiver, Object... replacements) {
         Object value = config.get(this.path);
 
+
+
         String message;
         if (value == null) {
             message = "BattleBox: message not found (" + this.path + ")";
@@ -44,25 +47,18 @@ public enum Message {
         }
 
         if (!message.isEmpty()) {
-            receiver.sendMessage(Utils.cc(replace(message, replacements)));
+            if(Delivery.PLACEHOLDER_API) {
+                if(receiver instanceof Player) {
+                    receiver.sendMessage(PlaceholderAPI.setPlaceholders((Player) receiver, Utils.cc(replace(message, replacements))));
+                } else {
+                    receiver.sendMessage(Utils.cc(replace(message, replacements)));
+                }
+            } else {
+                receiver.sendMessage(Utils.cc(replace(message, replacements)));
+            }
         }
     }
 
-    public void send(Player receiver, Object... replacements) {
-        Object value = config.get(this.path);
-
-        String message;
-        if (value == null) {
-            message = "BattleBox: message not found (" + this.path + ")";
-        } else {
-            message = value instanceof List ? Utils.fromList((List<?>) value) : value.toString();
-        }
-
-
-        if (!message.isEmpty()) {
-            receiver.sendMessage(PlaceholderAPI.setPlaceholders(receiver, Utils.cc(replace(message, replacements))));
-        }
-    }
 
     private String replace(String message, Object... replacements) {
         for (int i = 0; i < replacements.length; i += 2) {

@@ -10,19 +10,23 @@ import lol.vedant.delivery.api.menu.MenuListener;
 import lol.vedant.delivery.api.menu.MenuManager;
 import lol.vedant.delivery.commands.DeliveryCommand;
 import lol.vedant.delivery.commands.GetDeliveryItemCommand;
+import lol.vedant.delivery.commands.TimeTestCommand;
 import lol.vedant.delivery.config.ConfigManager;
 import lol.vedant.delivery.core.DeliveryManager;
 import lol.vedant.delivery.database.Database;
 import lol.vedant.delivery.database.MySQL;
 import lol.vedant.delivery.database.SQLite;
 import lol.vedant.delivery.hook.OraxenHook;
+import lol.vedant.delivery.hook.PlaceholderHook;
 import lol.vedant.delivery.listeners.JoinListener;
 import lol.vedant.delivery.menu.MenuLoader;
 import lol.vedant.delivery.utils.Message;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.despical.commandframework.CommandFramework;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Delivery extends JavaPlugin  {
@@ -38,6 +42,7 @@ public final class Delivery extends JavaPlugin  {
 
     private static Delivery instance;
 
+    public static boolean PLACEHOLDER_API = false;
     @Override
     public void onEnable() {
 
@@ -49,6 +54,7 @@ public final class Delivery extends JavaPlugin  {
         commandManager = new CommandFramework(this);
         commandManager.registerCommands(new DeliveryCommand());
         commandManager.registerCommands(new GetDeliveryItemCommand());
+        commandManager.registerCommands(new TimeTestCommand());
         actionManager = new ActionManager(this);
         menuManager = new MenuManager(this);
 
@@ -73,7 +79,6 @@ public final class Delivery extends JavaPlugin  {
 
         Message.setConfiguration(getLang());
 
-
     }
 
 
@@ -82,11 +87,16 @@ public final class Delivery extends JavaPlugin  {
         if(metrics != null) {
             metrics.shutdown();
         }
+
+        database.shutdown();
     }
+
 
     public void hooks() {
         if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PlaceholderHook(this).register();
             getLogger().info("Hooked into PlaceholderAPI");
+            PLACEHOLDER_API = true;
         }
 
         if(Bukkit.getPluginManager().isPluginEnabled("Oraxen")) {

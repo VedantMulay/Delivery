@@ -8,6 +8,7 @@ package lol.vedant.delivery.core;
 import de.tr7zw.changeme.nbtapi.NBT;
 import lol.vedant.delivery.Delivery;
 import lol.vedant.delivery.api.item.ItemCreator;
+import lol.vedant.delivery.utils.DurationParser;
 import lol.vedant.delivery.utils.TimeUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -128,7 +129,7 @@ public class DeliveryManager {
                     playerDelivery.setRandomActions(randomActions);
                 }
 
-                playerDelivery.setClaimInterval(TimeUtils.parseDuration(delivery.getString("claim_interval")));
+                playerDelivery.setClaimInterval(DurationParser.parseDuration(delivery.getString("claim_interval")));
 
                 deliveries.put(deliveryId, playerDelivery);
             }

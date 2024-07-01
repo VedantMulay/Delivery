@@ -37,7 +37,10 @@ public class MenuListener implements Listener {
         if (event.getPlayer() instanceof Player) {
             Player player = (Player) event.getPlayer();
             if (menuManager.isMenuOpen(player)) {
+                Menu menu = menuManager.getOpenMenu(player);
+                menu.handleMenuClose(event);
                 menuManager.closeMenu(player);
+
             }
         }
     }

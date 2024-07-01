@@ -6,8 +6,12 @@ import lol.vedant.delivery.api.menu.Menu;
 import lol.vedant.delivery.core.DeliveryManager;
 import lol.vedant.delivery.core.PlayerDelivery;
 import lol.vedant.delivery.utils.Message;
+import lol.vedant.delivery.utils.PlaceholderParse;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
 
@@ -15,13 +19,17 @@ public class DeliveryMenu extends Menu {
 
     private static final Delivery plugin = Delivery.getInstance();
     private final Player player;
+    private final String menu;
     private List<MenuItem> items;
+    private int reloadTask;
 
     public DeliveryMenu(Player player, String menu) {
         super("Delivery", 27);
         this.player = player;
+        this.menu = menu;
 
-        setMenuItems();
+        BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, this::setMenuItems, 0L, 20L);
+        this.reloadTask = task.getTaskId();
     }
 
     @Override
@@ -41,14 +49,19 @@ public class DeliveryMenu extends Menu {
         }
     }
 
+    @Override
+    public void handleMenuClose(InventoryCloseEvent event) {
+        player.sendMessage("You closed the menu. The scheduler has been closed.");
+        Bukkit.getScheduler().cancelTask(reloadTask);
+    }
+
     public void processDeliveryClick(String deliveryId) {
         DeliveryManager manager = plugin.getDeliveryManager();
         PlayerDelivery delivery = DeliveryManager.deliveries.get(deliveryId);
 
-        if(player.hasPermission(delivery.getPermission())) {
+        if (player.hasPermission(delivery.getPermission())) {
             if (manager.canClaim(player, deliveryId)) {
                 Message.DELIVERY_CLAIM.send(player);
-
 
                 if (delivery.getFixedActions() != null) {
                     plugin.getActionManager().runActions(player, delivery.getFixedActions());
@@ -58,6 +71,8 @@ public class DeliveryMenu extends Menu {
                 if (randomActions != null) {
                     plugin.getActionManager().runActions(player, randomActions);
                 }
+
+                plugin.getDatabase().setClaimed(player, deliveryId);
             } else {
                 Message.DELIVERY_WAIT.send(player, "{time}", manager.getTimeUntilClaim(player, deliveryId));
             }
@@ -80,26 +95,32 @@ public class DeliveryMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        MenuPage page = plugin.getMenuLoader().getPage("delivery");
-        this.items = page.getItems();
+        MenuPage page = plugin.getMenuLoader().getPage(menu);
+        items = page.getItems();
+
 
         for (MenuItem item : items) {
-            if(item.getItemType() == ItemType.ITEM) {
+
+            if (item.getItemType() == ItemType.ITEM) {
                 getInventory().setItem(item.getSlot(), item.getNormalItem());
-            } else if(item.getItemType() == ItemType.DELIVERY) {
+            } else if (item.getItemType() == ItemType.DELIVERY) {
                 PlayerDelivery delivery = DeliveryManager.deliveries.get(NBT.readNbt(item.getClaimedItem()).getString("Delivery.Id"));
                 DeliveryManager manager = plugin.getDeliveryManager();
 
-                if(player.hasPermission(delivery.getPermission())) {
-                    if(manager.canClaim(player, delivery.getId())) {
-                        getInventory().setItem(item.getSlot(), item.getClaimItem());
+                if (player.hasPermission(delivery.getPermission())) {
+                    if (manager.canClaim(player, delivery.getId())) {
+                        getInventory().setItem(item.getSlot(), PlaceholderParse.parsePlaceholders(item.getClaimItem(), player));
+
                     } else {
-                        getInventory().setItem(item.getSlot(), item.getClaimedItem());
+                        getInventory().setItem(item.getSlot(), PlaceholderParse.parsePlaceholders(item.getClaimedItem(), player));
+                        System.out.println(item.getClaimedItem());
                     }
                 } else {
-                    getInventory().setItem(item.getSlot(), item.getNoPermissionItem());
+                    getInventory().setItem(item.getSlot(), PlaceholderParse.parsePlaceholders(item.getNoPermissionItem(), player));
+                    System.out.println(item.getNoPermissionItem());
                 }
             }
         }
     }
+
 }

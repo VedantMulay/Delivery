@@ -6,9 +6,11 @@ package lol.vedant.delivery.utils;
 
 import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import lol.vedant.delivery.Delivery;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +27,7 @@ public class Utils {
                 .map(IridiumColorAPI::process)
                 .collect(Collectors.toList());
     }
+
     public static String fromList(List<?> list) {
         if (list == null || list.isEmpty()) return null;
         StringBuilder builder = new StringBuilder();
@@ -35,6 +38,14 @@ public class Utils {
         }
 
         return builder.toString();
+    }
+
+    public static String placeholder(Player player, String data) {
+        if(Delivery.PLACEHOLDER_API) {
+            return PlaceholderAPI.setPlaceholders(player, data);
+        }
+
+        return data;
     }
 
     public static Location parseLoc(String location) {

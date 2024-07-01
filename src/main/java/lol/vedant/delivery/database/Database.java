@@ -25,4 +25,6 @@ public interface Database {
 
     Duration getTimeUntilClaim(Player player, String deliveryId);
 
+    void shutdown();
+
 }
