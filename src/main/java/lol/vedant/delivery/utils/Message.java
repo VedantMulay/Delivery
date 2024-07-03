@@ -17,10 +17,15 @@ public enum Message {
     PREFIX("GENERAL.PREFIX"),
     NO_PERMISSION("GENERAL.NO_PERMISSION"),
     PLAYER_ONLY("GENERAL.PLAYER_ONLY"),
+    HELP_1("HELP.1"),
+    RELOAD("GENERAL.RELOAD"),
 
     DELIVERY_CLAIM("DELIVERY.CLAIM"),
     DELIVERY_NO_PERMISSION("DELIVERY.NO_PERMISSION"),
-    DELIVERY_WAIT("DELIVERY.WAIT");
+    DELIVERY_WAIT("DELIVERY.WAIT"),
+
+    PACK_27_TITLE("RESOURCE_PACK.27_GUI_TITLE"),
+    PACK_54_TITLE("RESOURCE_PACK.5_GUI_TITLE");
 
 
     private final String path;
@@ -36,8 +41,6 @@ public enum Message {
 
     public void send(CommandSender receiver, Object... replacements) {
         Object value = config.get(this.path);
-
-
 
         String message;
         if (value == null) {

@@ -21,6 +21,11 @@ public class ConfigManager {
         this.lang = new PluginConfig(plugin, "lang.yml");
         this.gui = new PluginConfig(plugin, "deliveries.yml");
         this.menu = new PluginConfig(plugin, "menu.yml");
+
+        config.checkDefaults(plugin, "config.yml");
+        lang.checkDefaults(plugin, "lang.yml");
+        gui.checkDefaults(plugin, "deliveries.yml");
+        menu.checkDefaults(plugin, "menu.yml");
     }
 
     public YamlConfiguration getConfig() {
@@ -39,4 +44,10 @@ public class ConfigManager {
         return this.menu.getConfig();
     }
 
+    public void reloadAll() {
+        menu.reload();
+        config.reload();
+        gui.reload();
+        lang.reload();
+    }
 }

@@ -16,6 +16,7 @@ public class JoinListener implements Listener {
     public void playerJoinEvent(PlayerJoinEvent e) {
         Delivery plugin = Delivery.getInstance();
         plugin.getDatabase().createUser(e.getPlayer());
+
     }
 
 }

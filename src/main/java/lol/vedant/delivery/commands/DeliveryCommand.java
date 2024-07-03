@@ -9,7 +9,6 @@ import lol.vedant.delivery.Delivery;
 import lol.vedant.delivery.menu.DeliveryMenu;
 import me.despical.commandframework.Command;
 import me.despical.commandframework.CommandArguments;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
@@ -46,8 +45,6 @@ public class DeliveryCommand {
                 // Page not found message
             }
         }
-
-
 
 
     }

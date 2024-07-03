@@ -1,6 +1,5 @@
 package lol.vedant.delivery.menu;
 
-
 import de.tr7zw.changeme.nbtapi.NBT;
 import lol.vedant.delivery.Delivery;
 import lol.vedant.delivery.api.item.ItemCreator;
@@ -22,7 +21,14 @@ public class MenuLoader {
 
     public MenuLoader(Delivery plugin) {
         this.config = plugin.getMenu();
+        try {
+            load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void load() throws Exception {
         Set<String> menuIds = config.getKeys(false);
 
         for (String menu : menuIds) {
@@ -69,6 +75,18 @@ public class MenuLoader {
         }
 
         logger.log(Level.INFO, "Menu loading complete. Loaded {0} menus.", menus.size());
+    }
+
+    public void reload() {
+        logger.log(Level.INFO, "Reloading menus data...");
+        menus.clear(); // Clear existing menus
+        try {
+            load(); // Reload menus from the configuration file
+            logger.log(Level.INFO, "Menus reloaded successfully.");
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "An error occurred while reloading menus: {0}", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public MenuPage getPage(String id) {

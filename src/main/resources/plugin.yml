@@ -5,5 +5,4 @@ api-version: '1.18'
 load: POSTWORLD
 softdepend:
   - "Oraxen"
-  - "ProtocolLib"
   - "PlaceholderAPI"

@@ -9,8 +9,7 @@ import lol.vedant.delivery.action.ActionManager;
 import lol.vedant.delivery.api.menu.MenuListener;
 import lol.vedant.delivery.api.menu.MenuManager;
 import lol.vedant.delivery.commands.DeliveryCommand;
-import lol.vedant.delivery.commands.GetDeliveryItemCommand;
-import lol.vedant.delivery.commands.TimeTestCommand;
+import lol.vedant.delivery.commands.admin.ReloadCommand;
 import lol.vedant.delivery.config.ConfigManager;
 import lol.vedant.delivery.core.DeliveryManager;
 import lol.vedant.delivery.database.Database;
@@ -21,7 +20,6 @@ import lol.vedant.delivery.hook.PlaceholderHook;
 import lol.vedant.delivery.listeners.JoinListener;
 import lol.vedant.delivery.menu.MenuLoader;
 import lol.vedant.delivery.utils.Message;
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.despical.commandframework.CommandFramework;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -51,9 +49,6 @@ public final class Delivery extends JavaPlugin  {
         configManager = new ConfigManager(this);
         deliveryManager = new DeliveryManager(this);
         commandManager = new CommandFramework(this);
-        commandManager.registerCommands(new DeliveryCommand());
-        commandManager.registerCommands(new GetDeliveryItemCommand());
-        commandManager.registerCommands(new TimeTestCommand());
         actionManager = new ActionManager(this);
         menuManager = new MenuManager(this);
 
@@ -69,6 +64,9 @@ public final class Delivery extends JavaPlugin  {
 
         registerEvents();
         hooks();
+
+        commandManager.registerCommands(new DeliveryCommand());
+        commandManager.registerCommands(new ReloadCommand(this));
 
         if(getConfiguration().getBoolean("enable-bstats")) {
             metrics = new Metrics(this, 22385);
@@ -151,6 +149,20 @@ public final class Delivery extends JavaPlugin  {
 
     public ActionManager getActionManager() {
         return actionManager;
+    }
+
+    public void reload() {
+        //reload configuration files
+        configManager.reloadAll();
+        getLogger().info("Reloaded configuration files...");
+
+        //Reload Deliveries
+        deliveryManager.reload();
+
+        //Reload GUI Menus
+        menuLoader.reload();
+        getLogger().info("Reloaded configuration files...");
+
     }
 
 }

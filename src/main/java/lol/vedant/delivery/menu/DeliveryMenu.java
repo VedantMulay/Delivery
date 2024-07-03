@@ -7,6 +7,7 @@ import lol.vedant.delivery.core.DeliveryManager;
 import lol.vedant.delivery.core.PlayerDelivery;
 import lol.vedant.delivery.utils.Message;
 import lol.vedant.delivery.utils.PlaceholderParse;
+import lol.vedant.delivery.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -27,6 +28,14 @@ public class DeliveryMenu extends Menu {
         super("Delivery", 27);
         this.player = player;
         this.menu = menu;
+
+        if(plugin.getConfiguration().getBoolean("resource-pack")) {
+            if(getSize() == 27) {
+                this.setTitle(Utils.cc(Message.PACK_27_TITLE.asString()));
+            } else {
+                this.setTitle(Utils.cc(Message.PACK_54_TITLE.asString()));
+            }
+        }
 
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, this::setMenuItems, 0L, 20L);
         this.reloadTask = task.getTaskId();
@@ -95,6 +104,11 @@ public class DeliveryMenu extends Menu {
     @Override
     public void setMenuItems() {
         MenuPage page = plugin.getMenuLoader().getPage(menu);
+        if(!plugin.getConfiguration().getBoolean("resource-pack")) {
+            setTitle(page.getTitle());
+
+        }
+
         items = page.getItems();
 
 
