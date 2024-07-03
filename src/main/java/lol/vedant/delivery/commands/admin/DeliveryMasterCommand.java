@@ -19,8 +19,8 @@ public class DeliveryMasterCommand {
                     "delivery-master",
             },
             desc = "Delivery master admin command"
-
     )
+
     public void execute(CommandArguments args) {
         CommandSender sender  = args.getSender();
         if(!sender.hasPermission("delivery.commands.admin")) {

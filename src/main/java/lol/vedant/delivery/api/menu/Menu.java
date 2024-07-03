@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024 Vedant Mulay. All rights reserved.
+ */
+
 package lol.vedant.delivery.api.menu;
 
 import lol.vedant.delivery.menu.MenuItem;

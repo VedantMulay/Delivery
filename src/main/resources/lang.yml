@@ -1,22 +1,23 @@
 GENERAL:
-  PREFIX: "&7[&#00FF97Delivery&7]"
-  NO_PERMISSION: "{prefix} &#FF0042You do not have permission to do this."
-  PLAYER_ONLY: "{prefix} &#FF0042This action can only be done by a player."
+  PREFIX: "&7[<SOLID:00FF97>Delivery&7]"
+  NO_PERMISSION: "{prefix} <SOLID:FF0042>You do not have permission to do this."
+  PLAYER_ONLY: "{prefix} <SOLID:FF0042>This action can only be done by a player."
   RELOAD:
     - "&aReloading plugin files.."
     - "&eWhile this command exists we still recommend restarting the server.."
 
 DELIVERY:
-  CLAIM: "{prefix} &fYou claimed the &#00FF97{delivery} &fsuccessfully."
-  NO_PERMISSION: "{prefix} &#FF0042You do not have permission to claim this delivery."
-  WAIT: "{prefix} &#FF0042Please wait {time} to claim this delivery."
-  PAGE_NOT_FOUND: "{prefix} &#FF0042Page not found."
+  CLAIM: "{prefix} &fYou claimed the delivery <SOLID:00FF97>successfully."
+  NO_PERMISSION: "{prefix} <SOLID:FF0042>You do not have permission to claim this delivery."
+  WAIT: "{prefix} <SOLID:FF0042>Please wait {time} to claim this delivery."
+  PAGE_NOT_FOUND: "{prefix} <SOLID:FF0042>Page not found."
 
 HELP:
   1:
-    - "&cDelivery Master &7- &fPlugin Help"
-    - "&c/delivery <menu_id> - &fOpen the delivery menu"
-    - "&c/deliverymaster reload - &fReloads the config files"
+    - "<SOLID:FF0042>Delivery Master &7- &fPlugin Help"
+    - ""
+    - "  <SOLID:FF0042>delivery <menu_id> - &fOpen the delivery menu"
+    - "  <SOLID:FF0042>deliverymaster reload - &fReloads the config files"
 
 RESOURCE_PACK:
   27_GUI_TITLE: ""

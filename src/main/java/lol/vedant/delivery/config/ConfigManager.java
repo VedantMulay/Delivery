@@ -24,8 +24,6 @@ public class ConfigManager {
 
         config.checkDefaults(plugin, "config.yml");
         lang.checkDefaults(plugin, "lang.yml");
-        gui.checkDefaults(plugin, "deliveries.yml");
-        menu.checkDefaults(plugin, "menu.yml");
     }
 
     public YamlConfiguration getConfig() {

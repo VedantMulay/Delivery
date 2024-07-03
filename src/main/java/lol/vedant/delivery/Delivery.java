@@ -9,6 +9,7 @@ import lol.vedant.delivery.action.ActionManager;
 import lol.vedant.delivery.api.menu.MenuListener;
 import lol.vedant.delivery.api.menu.MenuManager;
 import lol.vedant.delivery.commands.DeliveryCommand;
+import lol.vedant.delivery.commands.admin.DeliveryMasterCommand;
 import lol.vedant.delivery.commands.admin.ReloadCommand;
 import lol.vedant.delivery.config.ConfigManager;
 import lol.vedant.delivery.core.DeliveryManager;
@@ -66,6 +67,7 @@ public final class Delivery extends JavaPlugin  {
         hooks();
 
         commandManager.registerCommands(new DeliveryCommand());
+        commandManager.registerCommands(new DeliveryMasterCommand());
         commandManager.registerCommands(new ReloadCommand(this));
 
         if(getConfiguration().getBoolean("enable-bstats")) {

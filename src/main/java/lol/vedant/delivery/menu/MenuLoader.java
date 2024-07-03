@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024 Vedant Mulay. All rights reserved.
+ */
+
 package lol.vedant.delivery.menu;
 
 import de.tr7zw.changeme.nbtapi.NBT;

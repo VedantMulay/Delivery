@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024 Vedant Mulay. All rights reserved.
+ */
+
 package lol.vedant.delivery.menu;
 
 import de.tr7zw.changeme.nbtapi.NBT;
@@ -106,7 +110,6 @@ public class DeliveryMenu extends Menu {
         MenuPage page = plugin.getMenuLoader().getPage(menu);
         if(!plugin.getConfiguration().getBoolean("resource-pack")) {
             setTitle(page.getTitle());
-
         }
 
         items = page.getItems();

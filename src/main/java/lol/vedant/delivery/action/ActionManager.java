@@ -6,7 +6,7 @@ package lol.vedant.delivery.action;
 
 import lol.vedant.delivery.Delivery;
 import lol.vedant.delivery.action.actions.*;
-import me.clip.placeholderapi.PlaceholderAPI;
+import lol.vedant.delivery.utils.Utils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 
@@ -55,14 +55,7 @@ public class ActionManager {
 
             if(action != null) {
                 item = item.contains(" ") ? item.split(" ", 2)[1] : "";
-
-                try {
-                    Class.forName("me.clip.placeholderapi.PlaceholderAPI");
-                    item = PlaceholderAPI.setPlaceholders(player, item);
-                } catch (ClassNotFoundException e) {
-                    //Ignored
-                }
-
+                item = Utils.placeholder(player, item);
                 action.run(plugin, player, item);
 
 
