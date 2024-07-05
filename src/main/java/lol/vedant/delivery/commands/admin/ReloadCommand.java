@@ -22,7 +22,8 @@ public class ReloadCommand {
             aliases = {
                     "delivery-master.reload"
             },
-            desc = "Reload the configurations files"
+            desc = "Reload the configurations files",
+            permission = "delivery.command.reload"
     )
 
     public void execute(CommandArguments args) {

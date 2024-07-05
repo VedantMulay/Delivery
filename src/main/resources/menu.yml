@@ -9,10 +9,18 @@ delivery:
   title: "Delivery Menu"
   items:
 
-    delivery-item:
+    daily-item:
       type: DELIVERY
       slot: 13
       delivery-id: daily-delivery
+    monthly-item:
+      type: DELIVERY
+      slot: 15
+      delivery-id: monthly-delivery
+    special-item:
+      type: DELIVERY
+      slot: 17
+      delivery-id: special-delivery
 
     close-item:
       type: ITEM

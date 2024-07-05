@@ -27,11 +27,14 @@ public class DeliveryMenu extends Menu {
     private final String menu;
     private List<MenuItem> items;
     private int reloadTask;
+    private MenuPage page;
 
     public DeliveryMenu(Player player, String menu) {
-        super("Delivery", 27);
+        super("", 27);
         this.player = player;
         this.menu = menu;
+        this.page = plugin.getMenuLoader().getPage(menu);
+        this.setSize(page.getRows() * 3);
 
         if(plugin.getConfiguration().getBoolean("resource-pack")) {
             if(getSize() == 27) {
@@ -107,7 +110,7 @@ public class DeliveryMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        MenuPage page = plugin.getMenuLoader().getPage(menu);
+
         if(!plugin.getConfiguration().getBoolean("resource-pack")) {
             setTitle(page.getTitle());
         }

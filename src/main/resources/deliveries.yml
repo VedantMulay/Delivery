@@ -1,42 +1,86 @@
 daily-delivery:
-  permission: 'delivery.claim.default'
+  permission: delivery.claim.default
   claim_interval: 24h
   item:
     material: CHEST_MINECART
-    name: "&7Daily Delivery"
+    name: <GRADIENT:FAF162>&lᴅᴀɪʟʏ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:FFE800>
     lore:
-      - "&fClaim your daily delivery"
-      - ""
-      - "&cYou don't have permission to claim this reward."
-    enchantments:
-      - PROTECTION;3
-      - UNBREAKING;2
-    item_flags:
-      - HIDE_ENCHANTS
-    custom_model_id: 0
+      - '&fClaim your daily delivery'
+      - ''
+      - '&eClaim interval: &f1 day.'
   claimed_item:
     material: MINECART
-    name: "&7Daily Delivery &e&lCLAIMED"
+    name: <GRADIENT:FAF162>&lᴅᴀɪʟʏ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:FFE800>
     lore:
-      - "&fYou have claimed your daily delivery please come back later."
-      - ""
-      - "&cYou don't have permission to claim this reward."
-    enchantments:
-      - PROTECTION;3
-      - UNBREAKING;2
-    item_flags:
-      - HIDE_ENCHANTS
-    custom_model_id: 0
+      - '&fYou have claimed your daily delivery please'
+      - '&fcome back later.'
+      - ''
+      - '&eClaim again in: &f%delivery_remaining_daily-delivery%'
   no_permission_item:
     material: MINECART
-    name: "&7Daily Delivery"
+    name: <GRADIENT:FAF162>&lᴅᴀɪʟʏ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:FFE800>
     lore:
-      - "&fClaim your daily delivery"
-      - ""
-      - "&cYou don't have permission to claim this reward."
-    enchantments:
-      - PROTECTION;3
-      - UNBREAKING;2
-    item_flags:
-      - HIDE_ENCHANTS
-    custom_model_id: 0
+      - '&fClaim your daily delivery'
+      - ''
+      - '&cYou don''t have permission to claim this reward.'
+
+monthly-delivery:
+  permission: delivery.claim.monthly
+  claim_interval: 30d
+  actions:
+    - '[MESSAGE] &aYou have claimed the delivery successfully'
+    - '[CONSOLE] give %player_name% gold_ingot 5'
+  random_actions:
+    action-1:
+      - '[MESSAGE] &fRandom action 1'
+    action-2:
+      - '[MESSAGE] &fRandom action 2'
+    action-3:
+      - '[MESSAGE] &fRandom action 3'
+  item:
+    material: CHEST_MINECART
+    name: <GRADIENT:00FFFB>&lᴍᴏɴᴛʜʟʏ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:00D8FF>
+    lore:
+      - '&fClaim your monthly delivery'
+      - ''
+      - '&cYou don''t have permission to claim this reward.'
+  claimed_item:
+    material: MINECART
+    name: <GRADIENT:00FFFB>&lᴍᴏɴᴛʜʟʏ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:00D8FF>
+    lore:
+      - '&fYou have claimed your monthly delivery please'
+      - '&fcome back later.'
+      - ''
+      - '&eClaim again in: &f%delivery_remaining_monthly-delivery%'
+  no_permission_item:
+    material: MINECART
+    name: <GRADIENT:00FFFB>&lᴍᴏɴᴛʜʟʏ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:00D8FF>
+    lore:
+      - '&fClaim your monthly delivery'
+      - ''
+      - '&cYou don''t have permission to claim this reward.'
+special-delivery:
+  permission: delivery.claim.special
+  claim_interval: 15d
+  item:
+    material: CHEST_MINECART
+    name: <GRADIENT:F700FF>&lꜱᴘᴇᴄɪᴀʟ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:88228B>
+    lore:
+      - '&fOnly cool people can have this!'
+      - ''
+      - '&eClaim Interval: 15d'
+  claimed_item:
+    material: MINECART
+    name: <GRADIENT:F700FF>&lꜱᴘᴇᴄɪᴀʟ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:88228B>
+    lore:
+      - '&fYou have claimed your special delivery please'
+      - '&fcome back later.'
+      - ''
+      - '&eClaim again in: &f%delivery_remaining_special-delivery%'
+  no_permission_item:
+    material: MINECART
+    name: <GRADIENT:F700FF>&lꜱᴘᴇᴄɪᴀʟ ᴅᴇʟɪᴠᴇʀʏ</GRADIENT:88228B>
+    lore:
+      - '&fOnly cool people can have this!'
+      - ''
+      - '&cYou don''t have permission to claim this reward.'

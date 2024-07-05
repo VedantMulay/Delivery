@@ -21,10 +21,11 @@ public class MenuLoader {
 
     private YamlConfiguration config;
     private Map<String, MenuPage> menus = new HashMap<>();
-    private static final Logger logger = Logger.getLogger(MenuLoader.class.getName());
+    private Logger logger;
 
     public MenuLoader(Delivery plugin) {
         this.config = plugin.getMenu();
+        this.logger = plugin.getLogger();
         try {
             load();
         } catch (Exception e) {
@@ -32,7 +33,7 @@ public class MenuLoader {
         }
     }
 
-    private void load() throws Exception {
+    private void load() {
         Set<String> menuIds = config.getKeys(false);
 
         for (String menu : menuIds) {

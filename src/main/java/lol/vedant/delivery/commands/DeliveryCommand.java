@@ -21,8 +21,7 @@ public class DeliveryCommand {
     @Command(
             name = "delivery",
             desc = "Get your deliveries",
-            senderType = Command.SenderType.PLAYER,
-            permission = "delivery.menu.open"
+            senderType = Command.SenderType.PLAYER
     )
 
     public void execute(CommandArguments args) {
